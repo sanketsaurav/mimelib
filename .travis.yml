@@ -12,7 +12,7 @@ python:
   - "pypy"
 
 install:
-  - pip install tox tox-travis tox-pipenv
+  - pip install tox tox-travis coveralls
 
 script:
   - tox

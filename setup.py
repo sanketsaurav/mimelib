@@ -7,6 +7,8 @@ import sys
 from shutil import rmtree
 
 from setuptools import find_packages, setup, Command
+from setuptools.command.test import test as TestCommand
+
 
 # Package meta-data.
 NAME = 'mimelib'
@@ -18,7 +20,10 @@ REQUIRES_PYTHON = '>=2.7.0'
 VERSION = None
 
 # What packages are required for this module to be executed?
-REQUIRED = ['six']
+REQUIRED = ['future', 'six']
+
+# What packages are required for tests to run?
+TEST_REQUIRED = ['pytest', 'pytest-cov']
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -34,6 +39,23 @@ else:
     about['__version__'] = VERSION
 
 
+class PyTest(TestCommand):
+    user_options = [("pytest-args=", "a", "Arguments to pass to pytest")]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.pytest_args = ""
+
+    def run_tests(self):
+        import shlex
+
+        # import here, cause outside the eggs aren't loaded
+        import pytest
+
+        errno = pytest.main(shlex.split(self.pytest_args))
+        sys.exit(errno)
+
+
 class UploadCommand(Command):
     """Support setup.py upload."""
 
@@ -44,12 +66,6 @@ class UploadCommand(Command):
     def status(s):
         """Prints things in bold."""
         print('\033[1m{0}\033[0m'.format(s))
-
-    def initialize_options(self):
-        pass
-
-    def finalize_options(self):
-        pass
 
     def run(self):
         try:
@@ -86,6 +102,7 @@ setup(
     url=URL,
     packages=find_packages(exclude=('tests',)),
     install_requires=REQUIRED,
+    tests_require=TEST_REQUIRED,
     include_package_data=True,
     license='MIT',
     classifiers=[
@@ -105,5 +122,6 @@ setup(
     ],
     cmdclass={
         'upload': UploadCommand,
+        'test': PyTest
     },
 )
