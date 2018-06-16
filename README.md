@@ -8,3 +8,60 @@
 
 `mimelib` aims at working with MIME types easier in Python. The standard library comes with the [mimetypes](https://docs.python.org/3/library/mimetypes.html)
 module. This library builds on top of it and adds more niceties to it, so you're generally happier when working with MIME types today.
+
+
+```python
+>>> import mimelib
+>>> mimelib.mimetype('application/json').is_text
+True
+>>> mimelib.url('https://example.com/avatar.jpg').is_image
+True
+>>> mimelib.url('pianoman.mp3').file_type
+media
+```
+
+## Installation
+
+To install mimelib, use pipenv (or pip):
+
+```
+$ pipenv install mimelib
+```
+
+## Usage
+
+`mimelib` is intended to be used alongside the `mimetypes` standard library
+module, and builds on top of it under the hood. So, if you are adding additional
+MIME types to be recognized, `mimelib` will work just as fine.
+
+### Initialization
+Either a valid MIME type string, or a URL or path can be used to work with `mimelib`.
+
+```python
+>>> m1 = mimelib.mimetype("application/json")  # pass a valid MIME type
+>>> m2 = mimelib.url("foo/bar/dataset.csv")  # or pass a path / url
+```
+
+Both these methods return a `MIME` object, the various useful properties of which
+are listed below.
+
+### Getting the file type
+
+The following file types are reported: `text`, `image`, `media` and `binary`.
+
+```python
+>>> mimelib.mimetype("application/ecmascript").file_type
+text
+>>> mimelib.mimetype("video/mpeg").file_type
+media
+>>> mimelib.url("archive.rar").file_type
+binary
+```
+
+The `Mime` object also has the following properties for conveniently checking
+specific file types:
+
+ - `is_text`
+ - `is_image`
+ - `is_media`
+ - `is_binary`
