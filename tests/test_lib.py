@@ -50,3 +50,8 @@ def test_mime_is_media():
 def test_mime_is_binary():
     assert Mime("url", "foo.zip").is_binary is True
     assert Mime("mimetype", "application/json").is_binary is False
+
+
+def test_mime_unrecognized_type():
+    assert Mime("mimetype", "foo/bar").file_type is None
+    assert Mime("url", "dummy.baz").file_type is None

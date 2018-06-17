@@ -48,7 +48,8 @@ class Mime(object):
         """
 
         # check if this the MIME type is recognized
-        if not mimetypes.guess_extension(self.mime_type, strict=False):
+        if not (self.mime_type and
+                mimetypes.guess_extension(self.mime_type, strict=False)):
             return None
 
         # check if it's an image
