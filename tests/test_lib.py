@@ -24,7 +24,7 @@ def test_mime_file_type():
     assert Mime("mimetype", "audio/midi").file_type == "media"
     assert Mime("url", "foo.zip").file_type == "binary"
     assert Mime("mimetype", "application/pdf").file_type == "binary"
-    assert Mime("mimetype", "application/dummy").file_type is None
+    assert Mime("mimetype", "application/dummy").file_type is ''
 
 
 def test_mime_is_image():
@@ -53,5 +53,5 @@ def test_mime_is_binary():
 
 
 def test_mime_unrecognized_type():
-    assert Mime("mimetype", "foo/bar").file_type is None
-    assert Mime("url", "dummy.baz").file_type is None
+    assert Mime("mimetype", "foo/bar").file_type == ''
+    assert Mime("url", "dummy.baz").file_type == ''
