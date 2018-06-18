@@ -3,6 +3,16 @@
 from pytest import raises
 from mimelib.lib import Mime
 
+NUM_GET_FILE_TYPE_CALLED = 0
+
+
+def only_once(func):
+    def wrap():
+        global NUM_GET_FILE_TYPE_CALLED
+        NUM_GET_FILE_TYPE_CALLED += 1
+        return func()
+    return wrap
+
 
 def test_mime_object_init():
     assert Mime("mimetype", "application/json").mime_type == "application/json"
@@ -24,7 +34,7 @@ def test_mime_file_type():
     assert Mime("mimetype", "audio/midi").file_type == "media"
     assert Mime("url", "foo.zip").file_type == "binary"
     assert Mime("mimetype", "application/pdf").file_type == "binary"
-    assert Mime("mimetype", "application/dummy").file_type is ''
+    assert Mime("mimetype", "application/dummy").file_type == ''
 
 
 def test_mime_is_image():
@@ -55,3 +65,12 @@ def test_mime_is_binary():
 def test_mime_unrecognized_type():
     assert Mime("mimetype", "foo/bar").file_type == ''
     assert Mime("url", "dummy.baz").file_type == ''
+
+
+def test_get_file_type_executes_only_once():
+    obj = Mime("url", "https://foo.mp3")
+    assert NUM_GET_FILE_TYPE_CALLED == 0
+    obj._Mime__get_file_type = only_once(obj._Mime__get_file_type)
+    assert obj.file_type == 'media'
+    assert obj.file_type == 'media'
+    assert NUM_GET_FILE_TYPE_CALLED == 1
