@@ -33,6 +33,8 @@ class Mime(object):
 
         self.mime_type = None
 
+        self.__file_type = None
+
         if data_type == "url":
             self.mime_type = mimetypes.guess_type(data, strict=False)[0]
         else:
@@ -44,13 +46,17 @@ class Mime(object):
         Returns the file type for the provided URL or MIME type.
 
         If the type cannot be determined, or the MIME type provided is not
-        recognized, return None.
+        recognized, return an empty string.
         """
+        if self.__file_type is None:
+            self.__file_type = self.__get_file_type()
+        return self.__file_type
 
+    def __get_file_type(self):
         # check if this the MIME type is recognized
         if not (self.mime_type and
                 mimetypes.guess_extension(self.mime_type, strict=False)):
-            return None
+            return ''
 
         # check if it's an image
         if self.mime_type.startswith("image/"):
