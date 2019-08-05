@@ -1,6 +1,6 @@
-# mimelib 🙊
+# mimelib 🙊 <a href="https://deepsource.io/gh/sanketsaurav/mimelib/?ref=repository-badge" target="_blank"><img align="right" alt="DeepSource" title="DeepSource" src="https://static.deepsource.io/deepsource-badge-light.svg"></a>
 
-[![Build Status](https://travis-ci.org/sanketsaurav/mimelib.svg?branch=master)](https://travis-ci.org/sanketsaurav/mimelib) [![Coverage Status](https://coveralls.io/repos/github/sanketsaurav/mimelib/badge.svg?branch=master)](https://coveralls.io/github/sanketsaurav/mimelib?branch=master) [![Maintainability](https://api.codeclimate.com/v1/badges/8422f69519a864a93df2/maintainability)](https://codeclimate.com/github/sanketsaurav/mimelib/maintainability)
+[![Build Status](https://travis-ci.org/sanketsaurav/mimelib.svg?branch=master)](https://travis-ci.org/sanketsaurav/mimelib) [![Coverage Status](https://coveralls.io/repos/github/sanketsaurav/mimelib/badge.svg?branch=master)](https://coveralls.io/github/sanketsaurav/mimelib?branch=master)
 
 > A MIME type is a label used to identify a type of data. It is used so software can know how to handle the data.
 > It serves the same purpose on the Internet that file extensions do on Microsoft Windows.
